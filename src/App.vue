@@ -27,7 +27,7 @@
             <v-card-text>Muahhhhhhhhhhhhhh, you are my valentine!!!</v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="green darken-1" text @click="showYayDialog = false">Yayyyyy</v-btn>
+              <v-btn color="green darken-1" text @click="showYayDialog = false, showHappyDialog = true">Yayyyyy</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -42,6 +42,17 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+        <v-dialog v-model="showHappyDialog" max-width="800px">
+          <v-card>
+            <v-card-title class="text-h5">HAPPY HAPPY!</v-card-title>
+            <v-img :src="happy" class="my-5" contain height="300"></v-img>
+            <v-card-text>HAPPY HAPPY CAT IS US</v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="showHappyDialog = false">happy</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
         <v-btn color="error" @click="moveNoButton" :style="noButtonClicked ? noButtonStyle : {}">NO</v-btn>
       </v-container>
     </v-main>
@@ -52,6 +63,7 @@
 import hold from '@/assets/hold.jpg';
 import heart from '@/assets/heart.png';
 import squint from '@/assets/squint.png';
+import happy from '@/assets/happy.gif';
 
 export default {
   name: 'App',
@@ -60,6 +72,7 @@ export default {
       noClickCount: 0,
       showNayDialog: false,
       showYayDialog: false,
+      showHappyDialog: false,
       yesButtonSize: 100,
       noButtonPosition: { top: '50%', left: '50%' },
       noButtonClicked: false,
@@ -68,6 +81,7 @@ export default {
       heart: heart,
       hold: hold,
       squint: squint,
+      happy: happy,
     };
   },
   computed: {
