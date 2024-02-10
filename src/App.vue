@@ -18,7 +18,7 @@
 
     <v-main>
       <v-container class="text-center">
-        <v-img :src="heart" class="my-5" contain height="600"></v-img>
+        <v-img v-show="!showVideo" :src="heart" class="my-5" contain height="600"></v-img>
         <v-btn color="primary" @click="showYayDialog = true" :style="noButtonClicked ? yesButtonStyle : {}">Yes!</v-btn>
         <v-dialog v-model="showYayDialog" max-width="800px">
           <v-card>
@@ -49,10 +49,13 @@
             <v-card-text>HAPPY HAPPY CAT IS US</v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="showHappyDialog = false">happy</v-btn>
+              <v-btn color="blue darken-1" text @click="toggleVideo">happy</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
+        <iframe v-show="showVideo" width="560" height="315" :src="`https://www.youtube.com/embed/KN3IemyqJJw`"
+          frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
         <v-btn color="error" @click="moveNoButton" :style="noButtonClicked ? noButtonStyle : {}">NO</v-btn>
       </v-container>
     </v-main>
@@ -73,6 +76,7 @@ export default {
       showNayDialog: false,
       showYayDialog: false,
       showHappyDialog: false,
+      showVideo: false,
       yesButtonSize: 100,
       noButtonPosition: { top: '50%', left: '50%' },
       noButtonClicked: false,
@@ -117,7 +121,10 @@ export default {
         this.showNayDialog = true;
       }
     },
-
+    toggleVideo() {
+      this.showHappyDialog = false;
+      this.showVideo = !this.showVideo;
+    },
   },
 };
 </script>
