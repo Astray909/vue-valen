@@ -1,136 +1,52 @@
 <template>
-  <v-app :theme="currentTheme">
-    <v-app-bar color="primary" dark app>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Will you be my Balda?</v-toolbar-title>
-      <v-spacer></v-spacer>
-    </v-app-bar>
-
-    <v-navigation-drawer v-model="drawer" app>
-      <v-list>
-        <v-list-item>
-          <v-list-item-action>
-            <v-switch v-model="isDark" :label="`Dark Mode: ${isDark ? 'On' : 'Off'}`"></v-switch>
-          </v-list-item-action>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-
-    <v-main>
-      <v-container class="text-center">
-        <v-img v-show="!showVideo" :src="heart" class="my-5" contain height="600"></v-img>
-        <v-btn color="primary" @click="showYayDialog = true" :style="noButtonClicked ? yesButtonStyle : {}">Yes!</v-btn>
-        <v-dialog v-model="showYayDialog" max-width="800px">
-          <v-card>
-            <v-card-title class="text-h5">MUEJEJEJEJEJEJEJEJE</v-card-title>
-            <v-img :src="hold" class="my-5" contain height="300"></v-img>
-            <v-card-text>Muahhhhhhhhhhhhhh, you are my valentine!!!</v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="green darken-1" text @click="showYayDialog = false, showHappyDialog = true">Yayyyyy</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <v-dialog v-model="showNayDialog" max-width="800px">
-          <v-card>
-            <v-card-title class="text-h5">NuoOOooOOOooOOoooo!</v-card-title>
-            <v-img :src="squint" class="my-5" contain height="300"></v-img>
-            <v-card-text>CLICK YES!</v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="showNayDialog = false">Okay...</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <v-dialog v-model="showHappyDialog" max-width="800px">
-          <v-card>
-            <v-card-title class="text-h5">HAPPY HAPPY!</v-card-title>
-            <v-img :src="happy" class="my-5" contain height="300"></v-img>
-            <v-card-text>HAPPY HAPPY CAT IS US</v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="toggleVideo">happy</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <iframe v-show="showVideo" width="560" height="315" :src="`https://www.youtube.com/embed/KN3IemyqJJw`"
-          frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen></iframe>
-        <v-btn color="error" @click="moveNoButton" :style="noButtonClicked ? noButtonStyle : {}">NO</v-btn>
-      </v-container>
-    </v-main>
-  </v-app>
+    <v-app :theme="currentTheme">
+        <AppBar :drawerVisible="drawerVisible" @toggleDrawer="toggleDrawer" />
+        <NavigationDrawer v-model="drawerVisible" @toggleDarkMode="toggleDarkMode" />
+        <v-main>
+            <router-view />
+        </v-main>
+    </v-app>
 </template>
-
+  
 <script>
-import hold from '@/assets/hold.jpg';
-import heart from '@/assets/heart.png';
-import squint from '@/assets/squint.png';
-import happy from '@/assets/happy.gif';
+import NavigationDrawer from './components/NavigationDrawer.vue';
+import AppBar from './components/AppBar.vue';
 
 export default {
-  name: 'App',
-  data() {
-    return {
-      noClickCount: 0,
-      showNayDialog: false,
-      showYayDialog: false,
-      showHappyDialog: false,
-      showVideo: false,
-      yesButtonSize: 100,
-      noButtonPosition: { top: '50%', left: '50%' },
-      noButtonClicked: false,
-      isDark: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
-      drawer: false,
-      heart: heart,
-      hold: hold,
-      squint: squint,
-      happy: happy,
-    };
-  },
-  computed: {
-    yesButtonStyle() {
-      return {
-        width: this.yesButtonSize + 'px',
-        height: this.yesButtonSize + 'px',
-      };
+    name: 'App',
+    components: {
+        NavigationDrawer,
+        AppBar,
     },
-    noButtonStyle() {
-      return {
-        position: 'absolute',
-        top: this.noButtonPosition.top,
-        left: this.noButtonPosition.left,
-      };
+    data() {
+        return {
+            isDark: localStorage.getItem('isDark') === 'true' ||
+                (localStorage.getItem('isDark') === null &&
+                    window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches),
+            drawerVisible: false,
+        }
     },
-    currentTheme() {
-      return this.isDark ? 'dark' : 'light';
+    watch: {
+        isDark(newValue) {
+            localStorage.setItem('isDark', newValue);
+        }
     },
-  },
-  methods: {
-    moveNoButton() {
-      this.noButtonClicked = true;
-      this.noClickCount++;
-      const xOffset = 100;
-      const yOffset = 50;
-      const appBarHeight = 64;
-      const x = Math.random() * (window.innerWidth - xOffset);
-      const y = Math.random() * (window.innerHeight - appBarHeight - yOffset) + appBarHeight;
-      this.noButtonPosition = { top: `${y}px`, left: `${x}px` };
-      this.yesButtonSize += 50;
-      if (this.noClickCount >= 5) {
-        this.showNayDialog = true;
-      }
+    computed: {
+        currentTheme() {
+            return this.isDark ? 'dark' : 'light';
+        },
     },
-    toggleVideo() {
-      this.showHappyDialog = false;
-      this.showVideo = !this.showVideo;
-    },
-  },
-};
-</script>
-
-<style scoped>
-.v-btn {
-  margin: 10px;
+    methods: {
+        toggleDarkMode() {
+            this.isDark = !this.isDark;
+        },
+        toggleDrawer() {
+            this.drawerVisible = !this.drawerVisible;
+        }
+    }
 }
+</script>
+  
+<style>
+/* Your existing styles or any modifications */
 </style>

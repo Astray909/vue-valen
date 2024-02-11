@@ -14,7 +14,7 @@ export default createVuetify({
         // Define your theme for light mode
         // Example: colors for the light theme
         colors: {
-          primary: '#1976D2', // Example color
+          primary: '#9ED5D6', // Example color
           // Add other colors as needed
         },
       },
@@ -22,7 +22,7 @@ export default createVuetify({
         // Define your theme for dark mode
         // Example: colors for the dark theme
         colors: {
-          primary: '#2196F3', // Example color
+          primary: '#353F48', // Example color
           // Add other colors as needed
         },
       },
