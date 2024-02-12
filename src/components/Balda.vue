@@ -33,7 +33,7 @@
             <v-card-text>HAPPY HAPPY CAT IS US</v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" link :to="'/hub'">happy</v-btn>
+              <v-btn color="blue darken-1" link :to="'/food'">happy</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>

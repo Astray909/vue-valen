@@ -1,13 +1,13 @@
 <template>
     <v-app :theme="currentTheme">
-        <AppBar :drawerVisible="drawerVisible" @toggleDrawer="toggleDrawer" />
+        <AppBar :drawerVisible="drawerVisible" @toggleDrawer="toggleDrawer" :title="appBarTitle" />
         <NavigationDrawer v-model="drawerVisible" @toggleDarkMode="toggleDarkMode" />
         <v-main>
             <router-view />
         </v-main>
     </v-app>
 </template>
-  
+
 <script>
 import NavigationDrawer from './components/NavigationDrawer.vue';
 import AppBar from './components/AppBar.vue';
@@ -24,11 +24,15 @@ export default {
                 (localStorage.getItem('isDark') === null &&
                     window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches),
             drawerVisible: false,
+            appBarTitle: 'Default Title',
         }
     },
     watch: {
         isDark(newValue) {
             localStorage.setItem('isDark', newValue);
+        },
+        '$route'() {
+            this.updateAppBarTitle();
         }
     },
     computed: {
@@ -36,17 +40,22 @@ export default {
             return this.isDark ? 'dark' : 'light';
         },
     },
+    mounted() {
+        this.updateAppBarTitle();
+    },
     methods: {
         toggleDarkMode() {
             this.isDark = !this.isDark;
         },
         toggleDrawer() {
             this.drawerVisible = !this.drawerVisible;
+        },
+        updateAppBarTitle() {
+            const currentRoute = this.$route;
+            this.appBarTitle = currentRoute.meta.title || 'Default Title';
         }
     }
 }
 </script>
-  
-<style>
-/* Your existing styles or any modifications */
-</style>
+
+<style></style>

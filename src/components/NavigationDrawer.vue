@@ -8,6 +8,13 @@
                 </v-list-item-action>
             </v-list-item>
 
+            <v-list-item link :to="'/hub'">
+                <v-list-item-action class="d-flex align-center">
+                    <v-icon>mdi-home-circle</v-icon>
+                    <v-list-item-title class="ml-2">Hub World</v-list-item-title>
+                </v-list-item-action>
+            </v-list-item>
+
             <v-list-item link :to="'/balda'">
                 <v-list-item-action class="d-flex align-center">
                     <v-icon>mdi-hand-heart</v-icon>
@@ -15,17 +22,10 @@
                 </v-list-item-action>
             </v-list-item>
 
-            <v-list-item link :to="'/hello'">
+            <v-list-item link :to="'/food'">
                 <v-list-item-action class="d-flex align-center">
-                    <v-icon>mdi-test-tube</v-icon>
-                    <v-list-item-title class="ml-2">Hello</v-list-item-title>
-                </v-list-item-action>
-            </v-list-item>
-
-            <v-list-item link :to="'/hub'">
-                <v-list-item-action class="d-flex align-center">
-                    <v-icon>mdi-test-tube</v-icon>
-                    <v-list-item-title class="ml-2">Hub World</v-list-item-title>
+                    <v-icon>mdi-food-croissant</v-icon>
+                    <v-list-item-title class="ml-2">Eat what?</v-list-item-title>
                 </v-list-item-action>
             </v-list-item>
         </v-list>
