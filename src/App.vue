@@ -1,6 +1,6 @@
 <template>
     <v-app :theme="currentTheme">
-        <AppBar :drawerVisible="drawerVisible" @toggleDrawer="toggleDrawer" :title="appBarTitle" />
+        <AppBar :drawerVisible="drawerVisible" @toggleDrawer="toggleDrawer" :header="appBarHeader" />
         <NavigationDrawer v-model="drawerVisible" @toggleDarkMode="toggleDarkMode" />
         <v-main>
             <router-view />
@@ -24,7 +24,7 @@ export default {
                 (localStorage.getItem('isDark') === null &&
                     window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches),
             drawerVisible: false,
-            appBarTitle: 'Default Title',
+            appBarHeader: 'Default Header',
         }
     },
     watch: {
@@ -32,7 +32,7 @@ export default {
             localStorage.setItem('isDark', newValue);
         },
         '$route'() {
-            this.updateAppBarTitle();
+            this.updateAppBarHeader();
         }
     },
     computed: {
@@ -41,7 +41,7 @@ export default {
         },
     },
     mounted() {
-        this.updateAppBarTitle();
+        this.updateAppBarHeader();
     },
     methods: {
         toggleDarkMode() {
@@ -50,9 +50,9 @@ export default {
         toggleDrawer() {
             this.drawerVisible = !this.drawerVisible;
         },
-        updateAppBarTitle() {
+        updateAppBarHeader() {
             const currentRoute = this.$route;
-            this.appBarTitle = currentRoute.meta.title || 'Default Title';
+            this.appBarHeader = currentRoute.meta.header || 'Default Header';
         }
     }
 }

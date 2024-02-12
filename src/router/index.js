@@ -10,28 +10,28 @@ const routes = [
         redirect: '/hub'
     },
     {
-        path: '/balda',
-        name: 'Balda',
-        component: Balda,
-        meta: { title: 'Balda' }
-    },
-    {
-        path: '/hello',
-        name: 'HelloWorld',
-        component: HelloWorld,
-        meta: { title: 'HelloWorld' }
-    },
-    {
         path: '/hub',
         name: 'HubWorld',
         component: HubWorld,
-        meta: { title: 'Main Hub' }
+        meta: { title: 'Main Hub', header: 'Hub World', icon: 'mdi-home-circle', hidden: false }
+    },
+    {
+        path: '/balda',
+        name: 'Balda',
+        component: Balda,
+        meta: { title: 'Balda', header: 'Will you be my balda?', icon: 'mdi-hand-heart', hidden: false }
     },
     {
         path: '/food',
         name: 'FoodWorld',
         component: FoodWorld,
-        meta: { title: 'Eat what?' }
+        meta: { title: 'Eat what?', header: 'What for dinner?', icon: 'mdi-food-croissant', hidden: false }
+    },
+    {
+        path: '/hello',
+        name: 'HelloWorld',
+        component: HelloWorld,
+        meta: { title: 'HelloWorld', header: 'Test World', icon: 'mdi-test-tube', hidden: true }
     }
 ]
 

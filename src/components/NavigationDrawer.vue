@@ -8,24 +8,10 @@
                 </v-list-item-action>
             </v-list-item>
 
-            <v-list-item link :to="'/hub'">
+            <v-list-item v-for="item in navigationItems" :key="item.name" link :to="item.path">
                 <v-list-item-action class="d-flex align-center">
-                    <v-icon>mdi-home-circle</v-icon>
-                    <v-list-item-title class="ml-2">Hub World</v-list-item-title>
-                </v-list-item-action>
-            </v-list-item>
-
-            <v-list-item link :to="'/balda'">
-                <v-list-item-action class="d-flex align-center">
-                    <v-icon>mdi-hand-heart</v-icon>
-                    <v-list-item-title class="ml-2">Balda</v-list-item-title>
-                </v-list-item-action>
-            </v-list-item>
-
-            <v-list-item link :to="'/food'">
-                <v-list-item-action class="d-flex align-center">
-                    <v-icon>mdi-food-croissant</v-icon>
-                    <v-list-item-title class="ml-2">Eat what?</v-list-item-title>
+                    <v-icon>{{ item.icon }}</v-icon>
+                    <v-list-item-title class="ml-2">{{ item.title }}</v-list-item-title>
                 </v-list-item-action>
             </v-list-item>
         </v-list>
@@ -35,6 +21,18 @@
 <script>
 export default {
     name: 'NavigationDrawer',
+    computed: {
+        navigationItems() {
+            return this.$router.options.routes
+                .filter(route => route.meta && route.meta.title && !route.meta.hidden)
+                .map(route => ({
+                    path: route.path,
+                    name: route.name,
+                    title: route.meta.title,
+                    icon: route.meta.icon || 'mdi-circle-outline'
+                }));
+        }
+    }
 };
 </script>
 
