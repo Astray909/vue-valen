@@ -3,8 +3,7 @@
         <v-list dense>
             <v-list-item>
                 <v-list-item-action class="d-flex align-center">
-                    <v-switch insert :model-value="$root.isDark" @update:model-value="$emit('toggleDarkMode')"
-                        label="Dark Mode"></v-switch>
+                    <v-switch :model-value="isDark" @change="toggleDarkMode" label="Dark Mode"></v-switch>
                 </v-list-item-action>
             </v-list-item>
 
@@ -22,6 +21,9 @@
 export default {
     name: 'NavigationDrawer',
     computed: {
+        isDark() {
+            return this.$store.state.isDark;
+        },
         navigationItems() {
             return this.$router.options.routes
                 .filter(route => route.meta && route.meta.title && !route.meta.hidden)
@@ -32,6 +34,11 @@ export default {
                     icon: route.meta.icon || 'mdi-circle-outline'
                 }));
         }
+    },
+    methods: {
+        toggleDarkMode() {
+            this.$store.commit('toggleDarkMode');
+        },
     }
 };
 </script>

@@ -3,6 +3,7 @@ import Balda from '../components/Balda.vue'
 import HelloWorld from '../components/HelloWorld.vue'
 import HubWorld from '../components/Hub.vue'
 import FoodWorld from '../components/Food.vue'
+import LogIn from '../components/LogIn.vue'
 
 const routes = [
     {
@@ -14,6 +15,12 @@ const routes = [
         name: 'HubWorld',
         component: HubWorld,
         meta: { title: 'Main Hub', header: 'Hub World', icon: 'mdi-home-circle', hidden: false }
+    },
+    {
+        path: '/login',
+        name: 'LogIn',
+        component: LogIn,
+        meta: { title: 'Log In', header: 'User Sign In', icon: 'mdi-home-circle', hidden: true }
     },
     {
         path: '/balda',

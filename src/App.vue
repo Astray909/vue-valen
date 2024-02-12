@@ -7,7 +7,7 @@
         </v-main>
     </v-app>
 </template>
-
+  
 <script>
 import NavigationDrawer from './components/NavigationDrawer.vue';
 import AppBar from './components/AppBar.vue';
@@ -20,32 +20,26 @@ export default {
     },
     data() {
         return {
-            isDark: localStorage.getItem('isDark') === 'true' ||
-                (localStorage.getItem('isDark') === null &&
-                    window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches),
             drawerVisible: false,
             appBarHeader: 'Default Header',
         }
     },
-    watch: {
-        isDark(newValue) {
-            localStorage.setItem('isDark', newValue);
+    computed: {
+        currentTheme() {
+            return this.$store.state.isDark ? 'dark' : 'light';
         },
+    },
+    watch: {
         '$route'() {
             this.updateAppBarHeader();
         }
-    },
-    computed: {
-        currentTheme() {
-            return this.isDark ? 'dark' : 'light';
-        },
     },
     mounted() {
         this.updateAppBarHeader();
     },
     methods: {
         toggleDarkMode() {
-            this.isDark = !this.isDark;
+            this.$store.commit('toggleDarkMode');
         },
         toggleDrawer() {
             this.drawerVisible = !this.drawerVisible;
@@ -57,5 +51,6 @@ export default {
     }
 }
 </script>
-
+  
 <style></style>
+  
