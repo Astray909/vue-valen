@@ -5,6 +5,7 @@ import HelloWorld from '../components/HelloWorld.vue'
 import HubWorld from '../components/Hub.vue'
 import FoodWorld from '../components/Food.vue'
 import Profile from '../components/Profile.vue'
+import NotFound from '../components/NotFound.vue'
 
 const routes = [
     {
@@ -40,6 +41,12 @@ const routes = [
         name: 'HelloWorld',
         component: HelloWorld,
         meta: { title: 'HelloWorld', header: 'Test World', icon: 'mdi-test-tube', hidden: true }
+    },
+    {
+        path: '/:catchAll(.*)',
+        name: 'NotFound',
+        component: NotFound,
+        meta: { title: '404 Not Found', header: 'Page Not Found', icon: 'mdi-test-tube', hidden: true }
     }
 ]
 
