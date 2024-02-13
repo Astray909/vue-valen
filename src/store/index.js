@@ -17,6 +17,11 @@ export default createStore({
             state.isDark = !state.isDark;
             localStorage.setItem('isDark', state.isDark);
         },
+        resetDarkMode(state) {
+            let darkState = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            state.isDark = darkState;
+            localStorage.setItem('isDark', darkState);
+        },
         SET_LOGGED_IN(state, value) {
             state.user.loggedIn = value;
         },
@@ -58,11 +63,7 @@ export default createStore({
         async fetchUser(context, user) {
             context.commit("SET_LOGGED_IN", user !== null);
             if (user) {
-                context.commit("SET_USER", {
-                    displayName: user.displayName,
-                    email: user.email,
-                    photoURL: user.photoURL
-                });
+                context.commit("SET_USER", user);
             } else {
                 context.commit("SET_USER", null);
             }
@@ -72,11 +73,7 @@ export default createStore({
                 .then((result) => {
                     if (result && result.user) {
                         const user = result.user;
-                        commit('SET_USER', {
-                            displayName: user.displayName,
-                            email: user.email,
-                            photoURL: user.photoURL,
-                        });
+                        commit('SET_USER', user);
                         commit('SET_LOGGED_IN', true);
                     }
                 })
@@ -87,11 +84,7 @@ export default createStore({
             onAuthStateChanged(auth, (user) => {
                 if (user) {
                     // User is signed in
-                    commit('SET_USER', {
-                        displayName: user.displayName,
-                        email: user.email,
-                        photoURL: user.photoURL,
-                    });
+                    commit('SET_USER', user);
                     commit('SET_LOGGED_IN', true);
                 } else {
                     // User is signed out

@@ -1,7 +1,7 @@
 <template>
     <v-app :theme="currentTheme">
         <AppBar :drawerVisible="drawerVisible" @toggleDrawer="toggleDrawer" :header="appBarHeader" />
-        <NavigationDrawer v-model="drawerVisible" @toggleDarkMode="toggleDarkMode" />
+        <NavigationDrawer v-model="drawerVisible" />
         <v-main>
             <router-view />
         </v-main>
@@ -41,9 +41,6 @@ export default {
         this.$store.dispatch('initAuth');
     },
     methods: {
-        toggleDarkMode() {
-            this.$store.commit('toggleDarkMode');
-        },
         toggleDrawer() {
             this.drawerVisible = !this.drawerVisible;
         },

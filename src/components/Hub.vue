@@ -61,7 +61,7 @@ export default {
         };
     },
     methods: {
-        ...mapActions(['signInWithGoogle', 'signOut']),
+        ...mapActions(['signInWithGoogle']),
 
         navigateTo(path) {
             this.$router.push(path);
