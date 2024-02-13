@@ -7,8 +7,14 @@ import { loadFonts } from './plugins/webfontloader'
 
 loadFonts()
 
-createApp(App)
-  .use(router)
-  .use(vuetify)
-  .use(store)
-  .mount('#app')
+async function init() {
+  await store.dispatch('initAuth');
+
+  createApp(App)
+    .use(router)
+    .use(vuetify)
+    .use(store)
+    .mount('#app');
+}
+
+init();

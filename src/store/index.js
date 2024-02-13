@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-import { GoogleAuthProvider, signInWithPopup, signOut, getRedirectResult, onAuthStateChanged } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@/firebase/init';
 
 export default createStore({
@@ -69,28 +69,17 @@ export default createStore({
             }
         },
         initAuth({ commit }) {
-            getRedirectResult(auth)
-                .then((result) => {
-                    if (result && result.user) {
-                        const user = result.user;
+            return new Promise((resolve, reject) => {
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
                         commit('SET_USER', user);
                         commit('SET_LOGGED_IN', true);
+                    } else {
+                        commit('SET_LOGGED_IN', false);
+                        commit('SET_USER', null);
                     }
-                })
-                .catch((error) => {
-                    console.error('Error handling redirect result:', error);
-                });
-
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    // User is signed in
-                    commit('SET_USER', user);
-                    commit('SET_LOGGED_IN', true);
-                } else {
-                    // User is signed out
-                    commit('SET_LOGGED_IN', false);
-                    commit('SET_USER', null);
-                }
+                    resolve();
+                }, reject);
             });
         }
     },

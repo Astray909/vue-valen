@@ -64,9 +64,6 @@ export default {
                 this.$emit('error', 'Logout failed. Please try again.');
             }
         }
-    },
-    created() {
-        this.$store.dispatch('initAuth');
     }
 };
 </script>

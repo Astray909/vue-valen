@@ -37,9 +37,6 @@ export default {
     mounted() {
         this.updateAppBarHeader();
     },
-    created() {
-        this.$store.dispatch('initAuth');
-    },
     methods: {
         toggleDrawer() {
             this.drawerVisible = !this.drawerVisible;
