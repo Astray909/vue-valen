@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import store from '../store'
 import Balda from '../components/Balda.vue'
 import HelloWorld from '../components/HelloWorld.vue'
 import HubWorld from '../components/Hub.vue'
 import FoodWorld from '../components/Food.vue'
-import LogIn from '../components/LogIn.vue'
+import Profile from '../components/Profile.vue'
 
 const routes = [
     {
@@ -17,10 +18,10 @@ const routes = [
         meta: { title: 'Main Hub', header: 'Hub World', icon: 'mdi-home-circle', hidden: false }
     },
     {
-        path: '/login',
-        name: 'LogIn',
-        component: LogIn,
-        meta: { title: 'Log In', header: 'User Sign In', icon: 'mdi-home-circle', hidden: true }
+        path: '/profile',
+        name: 'Profile',
+        component: Profile,
+        meta: { title: 'Profile', header: 'User Profile', icon: 'mdi-home-circle', hidden: true }
     },
     {
         path: '/balda',
@@ -45,6 +46,16 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes
-})
+});
+
+router.beforeEach((to, from, next) => {
+    const loggedIn = store.state.user.loggedIn;
+
+    if (!loggedIn && to.path !== '/hub') {
+        next('/hub');
+    } else {
+        next();
+    }
+});
 
 export default router

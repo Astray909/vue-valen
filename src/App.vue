@@ -37,6 +37,9 @@ export default {
     mounted() {
         this.updateAppBarHeader();
     },
+    created() {
+        this.$store.dispatch('initAuth');
+    },
     methods: {
         toggleDarkMode() {
             this.$store.commit('toggleDarkMode');
