@@ -26,6 +26,9 @@ export default {
     },
     computed: {
         currentTheme() {
+            if (this.$store.state.isDark === null) {
+                return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
             return this.$store.state.isDark ? 'dark' : 'light';
         },
     },

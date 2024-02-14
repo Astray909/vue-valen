@@ -38,7 +38,7 @@ export default {
         ...mapState(['user']),
 
         isDark() {
-            return this.$store.state.isDark;
+            return  this.$vuetify.theme.current.dark;
         },
         navigationItems() {
             return this.$router.options.routes
@@ -56,7 +56,8 @@ export default {
     },
     methods: {
         toggleDarkMode() {
-            this.$store.commit('toggleDarkMode');
+            let isDark = this.$vuetify.theme.current.dark;
+            this.$store.commit('toggleDarkMode', isDark);
         },
         resetDarkMode() {
             this.$store.commit('resetDarkMode');

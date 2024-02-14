@@ -4,23 +4,21 @@ import { auth } from '@/firebase/init';
 
 export default createStore({
     state: {
-        isDark: localStorage.getItem('isDark') === 'true' ||
-            (localStorage.getItem('isDark') === null &&
-                window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches),
+        isDark: localStorage.getItem('isDark') === 'true' ? true : localStorage.getItem('isDark') === 'false' ? false : null,
         user: {
             loggedIn: false,
             data: null
         }
     },
     mutations: {
-        toggleDarkMode(state) {
-            state.isDark = !state.isDark;
+        toggleDarkMode(state, isDarkValue) {
+            state.isDark = !isDarkValue;
+            console.log(state)
             localStorage.setItem('isDark', state.isDark);
         },
         resetDarkMode(state) {
-            let darkState = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            state.isDark = darkState;
-            localStorage.setItem('isDark', darkState);
+            state.isDark = null;
+            localStorage.removeItem('isDark');
         },
         SET_LOGGED_IN(state, value) {
             state.user.loggedIn = value;
