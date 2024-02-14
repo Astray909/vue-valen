@@ -13,7 +13,6 @@ export default createStore({
     mutations: {
         toggleDarkMode(state, isDarkValue) {
             state.isDark = !isDarkValue;
-            console.log(state)
             localStorage.setItem('isDark', state.isDark);
         },
         resetDarkMode(state) {
