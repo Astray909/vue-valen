@@ -2,7 +2,7 @@
     <v-container>
         <v-row class="text-center">
             <v-col cols="12">
-                <v-img :src="require('../assets/bdayCat.png')" class="my-3" contain height="800" />
+                <v-img :src="require('../assets/bdayCat.png')" class="my-3" contain height="200" />
             </v-col>
 
             <v-col class="mb-4">
@@ -21,7 +21,7 @@
                     Happy Birthday
                 </v-card-title>
                 <v-card-text>
-                    <v-img :src="require('../assets/pallas.png')" contain height="500" />
+                    <v-img :src="require('../assets/pallas.png')" contain height="200" />
                 </v-card-text>
                 <v-card-text>
                     Happy 24th birthday!!! You are the most special bebe in every universe. Can't wait to spend
