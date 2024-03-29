@@ -56,6 +56,13 @@ export default {
                     icon: 'mdi-food-croissant',
                     text: 'What do you want for dinner?',
                     path: '/food'
+                },
+                {
+                    backgroundColor: '#FFBE98',
+                    borderColor: '#F7DED0',
+                    icon: 'mdi-party-popper',
+                    text: 'Birthday boy will open this.',
+                    path: '/bday'
                 }
             ]
         };
