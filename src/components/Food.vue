@@ -2,20 +2,25 @@
     <v-container>
         <v-row class="text-center">
             <v-col cols="12">
-                <v-img :src="require('../assets/construction_cat.jpg')" class="my-3" contain height="200" />
+                <v-img :src="require('../assets/stawberry_cat.jpg')" class="my-3" contain height="200" />
             </v-col>
 
             <v-col class="mb-4">
                 <h1 class="display-2 font-weight-bold mb-3">
-                    This is still under construction
+                    What to eat for dinner
                 </h1>
                 <div class="headline mb-2">{{ user.data.displayName }}</div>
             </v-col>
 
             <!-- Display posts -->
-            <v-col cols="12" v-for="idea in dinnerIdeas" :key="idea.name">
+            <v-col cols="12" v-for="idea in dinnerIdeas" :key="idea.id">
                 <v-card class="mb-4">
-                    <v-card-title>{{ idea.name }}</v-card-title>
+                    <v-card-title>
+                        {{ idea.name }}
+                        <v-btn icon @click="removeDinnerPost(idea.id)">
+                            <v-icon>mdi-close-circle</v-icon>
+                        </v-btn>
+                    </v-card-title>
                     <v-card-text>{{ idea.place }}</v-card-text>
                 </v-card>
             </v-col>
@@ -34,7 +39,7 @@
 <script>
 import { mapState } from 'vuex';
 import { db } from '@/firebase/init';
-import { collection, addDoc, serverTimestamp, query, onSnapshot, orderBy, doc, setDoc } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, query, onSnapshot, orderBy, doc, setDoc, deleteDoc } from 'firebase/firestore';
 
 export default {
     name: 'FoodWorld',
@@ -65,6 +70,14 @@ export default {
                 this.dinnerPlace = '';
             } catch (error) {
                 console.error("Error adding document: ", error);
+            }
+        },
+        async removeDinnerPost(postId) {
+            try {
+                const postRef = doc(db, 'dinner_ideas', 'dinner_post_ID', 'posts', postId);
+                await deleteDoc(postRef);
+            } catch (error) {
+                console.error("Error removing document: ", error);
             }
         }
     },
