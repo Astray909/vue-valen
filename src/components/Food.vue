@@ -14,14 +14,19 @@
 
             <!-- Display posts -->
             <v-col cols="12" v-for="idea in dinnerIdeas" :key="idea.id">
-                <v-card class="mb-4">
+                <v-card class="mb-4 position-relative">
                     <v-card-title>
                         {{ idea.name }}
-                        <v-btn icon @click="removeDinnerPost(idea.id)">
-                            <v-icon>mdi-close-circle</v-icon>
-                        </v-btn>
                     </v-card-title>
-                    <v-card-text>{{ idea.place }}</v-card-text>
+                    <v-card-text>
+                        {{ idea.place }}
+                        <div>
+                            <small>Posted by {{ idea.userName }} on {{ idea.formattedDate }}</small>
+                        </div>
+                    </v-card-text>
+                    <v-btn icon class="ma-2" @click="removeDinnerPost(idea.id)">
+                        <v-icon>mdi-close-circle</v-icon>
+                    </v-btn>
                 </v-card>
             </v-col>
 
@@ -47,7 +52,7 @@ export default {
         return {
             dinnerName: '',
             dinnerPlace: '',
-            dinnerIdeas: [] // Store fetched posts here
+            dinnerIdeas: []
         };
     },
     computed: {
@@ -63,6 +68,7 @@ export default {
                 await addDoc(dinnerPostRef, {
                     name: this.dinnerName,
                     place: this.dinnerPlace,
+                    userName: this.user.data.displayName,
                     timestamp: serverTimestamp()
                 });
 
@@ -79,15 +85,23 @@ export default {
             } catch (error) {
                 console.error("Error removing document: ", error);
             }
+        },
+        formatDate(timestamp) {
+            if (!timestamp) {
+                return 'Loading date...';
+            }
+            const date = timestamp.toDate();
+            return date.toLocaleDateString() + ' at ' + date.toLocaleTimeString();
         }
     },
     mounted() {
         const q = query(collection(db, 'dinner_ideas', 'dinner_post_ID', 'posts'), orderBy('timestamp'));
         onSnapshot(q, (querySnapshot) => {
-            this.dinnerIdeas = []; // Clear existing data before fetching new
+            this.dinnerIdeas = [];
             querySnapshot.forEach((doc) => {
                 let idea = doc.data();
-                idea.id = doc.id; // Optional: include the document ID in case you need it for CRUD operations
+                idea.id = doc.id;
+                idea.formattedDate = this.formatDate(idea.timestamp);
                 this.dinnerIdeas.push(idea);
             });
         });
