@@ -60,9 +60,9 @@ export default {
                 {
                     backgroundColor: '#FFBE98',
                     borderColor: '#F7DED0',
-                    icon: 'mdi-party-popper',
-                    text: 'Birthday boy will open this.',
-                    path: '/bday'
+                    icon: 'mdi-head-heart',
+                    text: 'Plan our date!',
+                    path: '/planner'
                 }
             ]
         };

@@ -4,6 +4,7 @@ import Balda from '../components/Balda.vue'
 import HelloWorld from '../components/HelloWorld.vue'
 import HubWorld from '../components/Hub.vue'
 import FoodWorld from '../components/Food.vue'
+import DatePlanner from '../components/DatePlanner.vue'
 import BdayWorld from '../components/BDay.vue'
 import Profile from '../components/Profile.vue'
 import NotFound from '../components/NotFound.vue'
@@ -38,10 +39,16 @@ const routes = [
         meta: { title: 'Eat what?', header: 'What for dinner?', icon: 'mdi-food-croissant', hidden: false }
     },
     {
+        path: '/planner',
+        name: 'DatePlanner',
+        component: DatePlanner,
+        meta: { title: 'Date Planner', header: 'What to do on the date?', icon: 'mdi-head-heart', hidden: false }
+    },
+    {
         path: '/bday',
         name: 'BdayWorld',
         component: BdayWorld,
-        meta: { title: 'Happy Birthday!!!!!', header: 'You are the birthday boy!!!', icon: 'mdi-party-popper', hidden: false }
+        meta: { title: 'Happy Birthday!!!!!', header: 'You are the birthday boy!!!', icon: 'mdi-party-popper', hidden: true }
     },
     {
         path: '/hello',
