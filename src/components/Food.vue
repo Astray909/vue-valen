@@ -13,7 +13,7 @@
             </v-col>
 
             <!-- Display posts -->
-            <v-col cols="12" v-for="idea in dinnerIdeas" :key="idea.id">
+            <v-col cols="12" v-for="idea in reversedDinnerIdeas" :key="idea.id">
                 <v-card class="mb-4 position-relative">
                     <v-card-title>
                         {{ idea.name }}
@@ -56,7 +56,11 @@ export default {
         };
     },
     computed: {
-        ...mapState(['user'])
+        ...mapState(['user']),
+
+        reversedDinnerIdeas() {
+            return this.dinnerIdeas.slice().reverse();
+        }
     },
     methods: {
         async createDinnerPost() {
