@@ -7,6 +7,7 @@ import FoodWorld from '../components/Food.vue'
 import BdayWorld from '../components/BDay.vue'
 import Profile from '../components/Profile.vue'
 import NotFound from '../components/NotFound.vue'
+import WindowSize from '../components/WindowSize.vue'
 
 const routes = [
     {
@@ -47,7 +48,13 @@ const routes = [
         path: '/hello',
         name: 'HelloWorld',
         component: HelloWorld,
-        meta: { title: 'HelloWorld', header: 'Test World', icon: 'mdi-test-tube', hidden: true }
+        meta: { title: 'HelloWorld', header: 'Test World', icon: 'mdi-tape-measure', hidden: true }
+    },
+    {
+        path: '/size',
+        name: 'WindowSize',
+        component: WindowSize,
+        meta: { title: 'Window Size', header: 'Window Size World', icon: 'mdi-test-tube', hidden: true }
     },
     {
         path: '/:catchAll(.*)',
