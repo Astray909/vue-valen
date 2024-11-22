@@ -45,6 +45,12 @@ const routes = [
         meta: { title: 'Happy Birthday!!!!!', header: 'You are the birthday boy!!!', icon: 'mdi-party-popper', hidden: false }
     },
     {
+        path: '/daysLeft',
+        name: 'DaysLeftWorld',
+        component: HelloWorld,
+        meta: { title: 'How Many Days?', header: 'Keep Count!!!!', icon: 'mdi-calendar-range', hidden: false }
+    },
+    {
         path: '/hello',
         name: 'HelloWorld',
         component: HelloWorld,

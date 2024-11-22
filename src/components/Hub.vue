@@ -63,6 +63,13 @@ export default {
                     icon: 'mdi-party-popper',
                     text: 'Birthday boy will open this.',
                     path: '/bday'
+                },
+                {
+                    backgroundColor: '#A1D6B2',
+                    borderColor: '#E8B86D',
+                    icon: 'mdi-calendar-range',
+                    text: 'Days left counter.',
+                    path: '/daysLeft'
                 }
             ]
         };
