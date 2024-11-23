@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from '../store'
 import Balda from '../components/Balda.vue'
+import DateCountWorld from '../components/DateCountWorld.vue'
 import HelloWorld from '../components/HelloWorld.vue'
 import HubWorld from '../components/Hub.vue'
 import FoodWorld from '../components/Food.vue'
@@ -46,8 +47,8 @@ const routes = [
     },
     {
         path: '/daysLeft',
-        name: 'DaysLeftWorld',
-        component: HelloWorld,
+        name: 'DateCountWorld',
+        component: DateCountWorld,
         meta: { title: 'How Many Days?', header: 'Keep Count!!!!', icon: 'mdi-calendar-range', hidden: false }
     },
     {
