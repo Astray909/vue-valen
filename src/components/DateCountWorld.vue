@@ -1,28 +1,54 @@
 <template>
-    <v-container>
-        <v-form @submit.prevent="saveDate">
-            <v-row>
-                <v-col cols="6">
-                    <v-date-picker v-model="selectedDate" label="Pick a Date" required></v-date-picker>
-                </v-col>
-
-                <v-col cols="6" class="text-center d-flex align-center justify-center">
-                    <div v-if="progress !== null">
-                        <v-progress-circular :model-value="parseFloat(progress.percentage)" size="350" width="30"
-                            color="orange">
-                            <div>
-                                {{ progress.daysLeft }} days left</div>
-                        </v-progress-circular>
+    <v-container fluid>
+        <div class="d-flex flex-wrap align-center justify-space-between">
+            <div class="flex-grow-1 mx-2 my-2 text-center d-flex align-center justify-center">
+                <v-progress-circular :model-value="parseFloat(progress.percentage)" size="350" width="30"
+                    color="orange">
+                    <div>
+                        <div v-if="isNaN(progress.daysLeft)">
+                            <div style="font-size: 2.5em; font-weight: bold;">
+                                :3
+                            </div>
+                            <div style="font-size: 1em;">
+                                meow meow meow
+                            </div>
+                        </div>
+                        <div v-else>
+                            <div style="font-size: 2.5em; font-weight: bold;">
+                                {{ progress.daysLeft >= 0 ? progress.daysLeft : Math.abs(progress.daysLeft) }}
+                            </div>
+                            <div style="font-size: 1em;">
+                                {{ progress.daysLeft >= 0 ? 'days left' : 'days ago' }}
+                            </div>
+                        </div>
                     </div>
-                </v-col>
-            </v-row>
+                </v-progress-circular>
+            </div>
+        </div>
 
-            <v-text-field v-model="tag" label="Tag" required class="mt-4"></v-text-field>
+        <v-btn color="pink" @click="popDialog()" class="mt-4">Add Date</v-btn>
 
-            <v-btn type="submit" color="primary" class="mt-4" :disabled="!selectedDate || !tag">
-                Save Date
-            </v-btn>
-        </v-form>
+        <v-dialog v-model="showDialog" max-width="600px">
+            <v-card>
+                <v-card-title class="text-h6 d-flex justify-space-between align-center">
+                    Add a New Date
+                    <v-btn icon @click="hideDialog()">
+                        <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                </v-card-title>
+                <v-card-text>
+                    <v-form @submit.prevent="saveDate">
+                        <div class="d-flex justify-center">
+                            <v-date-picker v-model="selectedDate" label="Pick a Date" required></v-date-picker>
+                        </div>
+                        <v-text-field v-model="tag" label="Tag" required class="mt-4"></v-text-field>
+                        <v-btn type="submit" color="primary" class="mt-4" :disabled="!selectedDate || !tag">
+                            Save Date
+                        </v-btn>
+                    </v-form>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
 
         <v-divider class="my-4"></v-divider>
 
@@ -35,9 +61,12 @@
                     </v-card-title>
                     <v-card-subtitle>{{ formatDate(date.date) }}</v-card-subtitle>
                     <v-card-actions>
-                        <v-btn text color="blue" @click="calculateProgress(date.date, date.savedAt)">Show
-                            Progress</v-btn>
-                        <v-btn text color="red" @click="deleteDate(date.id)">Delete</v-btn>
+                        <v-btn text color="blue" @click="calculateProgress(date.date, date.savedAt)">
+                            Show Progress
+                        </v-btn>
+                        <v-btn text color="red" @click="deleteDate(date.id)">
+                            Delete
+                        </v-btn>
                     </v-card-actions>
                 </v-card>
             </v-col>
@@ -56,10 +85,17 @@ export default {
             selectedDate: null,
             tag: '',
             savedDates: [],
-            progress: null
+            progress: {},
+            showDialog: false
         };
     },
     methods: {
+        popDialog() {
+            this.showDialog = true;
+        },
+        hideDialog() {
+            this.showDialog = false;
+        },
         async saveDate() {
             if (this.selectedDate && this.tag) {
                 try {
@@ -70,6 +106,7 @@ export default {
                     });
                     this.selectedDate = null;
                     this.tag = '';
+                    this.showDialog = false;
                 } catch (error) {
                     console.error('Error saving date:', error);
                 }
@@ -97,7 +134,8 @@ export default {
             const target = new Date(targetDate);
 
             if (target < now) {
-                this.progress = { percentage: 100, daysLeft: 0 };
+                const daysAgo = Math.floor((now - target) / (1000 * 60 * 60 * 24));
+                this.progress = { percentage: 100, daysLeft: -daysAgo };
                 return;
             }
 
@@ -114,7 +152,7 @@ export default {
         }
     },
     mounted() {
-        const q = query(collection(db, 'savedCountdownDates'), orderBy('date', 'desc'));
+        const q = query(collection(db, 'savedCountdownDates'), orderBy('date', 'asc'));
         onSnapshot(q, (snapshot) => {
             this.savedDates = snapshot.docs.map(doc => ({
                 id: doc.id,
