@@ -28,7 +28,7 @@
 
         <v-btn color="pink" @click="popDialog()" class="mt-4">Add Date</v-btn>
 
-        <v-dialog v-model="showDialog" max-width="600px">
+        <v-dialog v-model="showDialog" :fullscreen="isMobile" max-width='1000px'>
             <v-card>
                 <v-card-title class="text-h6 d-flex justify-space-between align-center">
                     Add a New Date
@@ -86,7 +86,8 @@ export default {
             tag: '',
             savedDates: [],
             progress: {},
-            showDialog: false
+            showDialog: false,
+            isMobile: window.innerWidth <= 1000
         };
     },
     methods: {
@@ -149,6 +150,9 @@ export default {
                 percentage,
                 daysLeft,
             };
+        },
+        updateIsMobile() {
+            this.isMobile = window.innerWidth <= 1000;
         }
     },
     mounted() {
@@ -160,6 +164,10 @@ export default {
                 date: doc.data().date instanceof Object && doc.data().date.toDate ? doc.data().date.toDate() : doc.data().date,
             }));
         });
+        window.addEventListener('resize', this.updateIsMobile);
+    },
+    beforeUnmount() {
+        window.removeEventListener('resize', this.updateIsMobile);
     }
 };
 </script>
