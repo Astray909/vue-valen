@@ -11,7 +11,7 @@
     "@mdi/font": "5.9.55",
     "core-js": "^3.8.3",
     "firebase": "^10.10.0",
-    "firebase-tools": "^13.6.0",
+    "firebase-tools": "^13.27.0",
     "roboto-fontface": "*",
     "vue": "^3.2.13",
     "vue-router": "^4.2.5",
