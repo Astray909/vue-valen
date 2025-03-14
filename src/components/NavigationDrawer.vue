@@ -3,7 +3,8 @@
         <v-list dense>
             <v-list-item>
                 <v-list-item-action class="d-flex justify-space-between align-items-center">
-                    <v-switch :model-value="isDark" @change="toggleDarkMode" label="Dark Mode"></v-switch>
+                    <v-switch :model-value="isDark" @change="toggleDarkMode" label="Dark Mode"
+                        hide-details="true"></v-switch>
                     <v-btn icon @click="resetDarkMode" class="ml-auto">
                         <v-icon>mdi-theme-light-dark</v-icon>
                     </v-btn>
@@ -38,7 +39,7 @@ export default {
         ...mapState(['user']),
 
         isDark() {
-            return  this.$vuetify.theme.current.dark;
+            return this.$vuetify.theme.current.dark;
         },
         navigationItems() {
             return this.$router.options.routes
